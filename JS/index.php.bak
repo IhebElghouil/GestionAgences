@@ -1,0 +1,103 @@
+﻿<html>
+<head>
+<title>pointage</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body><br>
+<br>
+<br>
+<center><h1>الشركة الجهوية للنقل بقابس</h1></center>
+<center><h1>التطبيقة الداخلية للتصرف في الأعوان</h1></center>
+<center>
+<form name="form1" method="post" action="">
+<?php
+
+
+require("connection.php"); 
+if(@$_POST['form']){
+if(@$_POST['login']!="" && @$_POST['password']!=""){
+
+$pass=$_POST['password'];
+$pass=md5($pass);
+$req="select * from login where login='".$_POST['login']."' and password='".$pass."'";
+$res=mysql_query($req);
+if($r=mysql_fetch_row($res)) {
+
+$_SESSION['congid']=$r[0];
+if ($r[0]==11)
+{
+$departement=8;
+}
+elseif ($r[0]==3)
+{
+$departement=2;
+}
+elseif ($r[0]==4)
+{
+$departement=5;
+}
+elseif ($r[0]==5)
+{
+$departement=6;
+}
+elseif ($r[0]==6)
+{
+$departement=7;
+}
+elseif ($r[0]==7)
+{
+$departement=3;
+}
+elseif ($r[0]==8)
+{
+$departement=13;
+}
+elseif ($r[0]==9)
+{
+$departement=11;
+}
+elseif ($r[0]==10)
+{
+$departement=12;
+}
+$_SESSION['departement']=$departement;
+header('location:c_agences.php');
+
+}else echo "اسم المستخدم او كلمة السر غير صحيحة";
+
+}else echo ": يجب ادخال المعلومات التالية ";
+}
+?>
+
+<br>
+  <table width="315" border="4" cellspacing="0"  class="Style1" border="1">
+    <tr>
+      <td width="198">
+        
+        <div align="right">
+          <input name="login" type="text" id="login">
+        </div></td>
+      <td width="103"><div align="right">اسم المستخدم</div></td>
+    </tr>
+    <tr>
+      <td>
+        
+        <div align="right">
+          <input name="password" type="password" id="password">
+        </div></td>
+      <td><div align="right">كلمة السر</div></td>
+    </tr>
+    <tr>
+      <td>
+        
+        <div align="right">
+          <input name="form" type="hidden" id="form" value="1">
+          <input type="submit" name="Submit" value="أبعث">
+        </div></td>
+      <td><div align="right"></div></td>
+    </tr>
+  </table>
+
+</form></center>
+</body>
+</html>

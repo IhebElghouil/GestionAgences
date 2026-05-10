@@ -1,0 +1,136 @@
+﻿/*Le style qui prime - Contraint les dimensionnements internes à la taille de la boîte, soit de la fenêtre*/
+html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
+a:link { color:#fcfcfc; text-decoration:none; }
+a:visited { color:#fcfcfc; text-decoration:none; }
+a:hover { color:#fcfcfc; text-decoration:none; }
+a:active { color:#fcfcfc; text-decoration:none; }
+html,body
+{
+	font-family:Calibri,Verdana,sans-serif;
+	font-size:15px;
+	line-height:1.5;
+	/*background-color:#fcfcfc;*/
+	padding:0px;
+	margin:0px;
+}
+html{overflow-x:hidden}
+
+select,input
+{
+	font-size:18px;
+	width:200px;
+	height:30px;
+	color:#a13638;
+}
+
+#entete
+{
+	width:100%;
+	text-align:center;
+	font-size:14px;
+	margin-top:20px;
+	min-height:40px;
+	height:auto;
+	padding-top:15px;
+	/*border-top:#666 2px solid;
+	background: linear-gradient(#999, #fcfcfc);*/
+}
+
+#pied
+{
+	width:100%;
+	position:fixed;
+	bottom:0px;
+	font-size:14px;
+	padding-top:10px;
+	background-position:right center;
+	padding-right:0px;
+	background-image:url("../sources/icones-bg.png");
+	background-repeat: no-repeat;
+	background-position:right center;
+}
+
+#contenu
+{
+	width:80%;
+	height:480px;
+	/*background: linear-gradient(#edeeee, #fff);*/
+	/*border:#666 2px solid;
+	border-radius:35px;*/
+	margin:auto;
+	/*Deux dernières coordonnées pour inverser l'effet de l'ombre portée*/
+	/*box-shadow: 0px 0px 3px 3px #666;*/	
+}
+
+#conteneur
+{
+	width:100%;
+	text-align:left;
+	margin-top:20px;
+}
+
+#btn
+{
+	position:absolute;
+	left:3%;
+	top:200px;
+}
+#auCentre
+{
+	width:auto;
+	height:auto;
+	margin:auto;
+	margin-top:20px;
+	padding:8px;
+	text-align:justify;
+	font-size:20px;
+}
+
+.rond
+{
+	width:45px;
+	height:45px;
+	border-radius:50%;
+	margin:auto;
+}
+
+.btnMenu
+{
+	 width:220px;
+	 height:40px;
+	 margin-left:12px;
+	 margin-right:12px;
+	 font-weight:bold;
+     color: #ccc;
+	 font-weight:bold;
+     background: #444;
+     
+	font-size:14px;
+	text-align:center;	
+	padding-left:0px;	
+}
+
+.btnMenu:hover
+{
+	cursor:pointer;
+	box-shadow: 6px 6px 0px #aaa;	
+}
+
+.calque
+{
+	width:100%;
+	text-align:center;
+	font-size:24px;
+	font-weight:bold;
+	margin-top:20px;
+	height:50px;
+	padding-top:4px;
+	background-color:#edeeee;
+	color:#2b579a;
+	border-top:#666 2px solid;
+	border-bottom:#666 2px solid;
+	background-repeat: no-repeat;
+	background-position:3% center;
+}
+
+

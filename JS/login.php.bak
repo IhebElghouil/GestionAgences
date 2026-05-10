@@ -1,0 +1,62 @@
+﻿<html>
+<head>
+<title>pointage</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body><br>
+<br>
+<br>
+
+<form name="form1" method="post" action="">
+<?php
+require("connection.php"); 
+if(@$_POST['form']){
+if(@$_POST['login']!="" && @$_POST['password']!=""){
+
+$pass=$_POST['password'];
+$pass=md5($pass);
+$req="select * from login where login='".$_POST['login']."' and password='".$pass."'";
+$res=mysql_query($req);
+if($r=mysql_fetch_row($res)) {
+if($r[0]==2){
+$_SESSION['congid']=$r[0];
+header('location:index.php');
+}
+}else echo "اسم المستخدم او كلمة السر غير صحيحة";
+
+}else echo ": يجب ادخال المعلومات التالية ";
+}
+?>
+
+<br>
+  <table width="315" border="4" cellspacing="0" bordercolor="#FFFFFF"  class="Style1">
+    <tr>
+      <td width="198">
+        
+        <div align="right">
+          <input name="login" type="text" id="login">
+        </div></td>
+      <td width="103"><div align="right">اسم المستخدم</div></td>
+    </tr>
+    <tr>
+      <td>
+        
+        <div align="right">
+          <input name="password" type="password" id="password">
+        </div></td>
+      <td><div align="right">كلمة السر</div></td>
+    </tr>
+    <tr>
+      <td>
+        
+        <div align="right">
+          <input name="form" type="hidden" id="form" value="1">
+          <input type="submit" name="Submit" value="أبعث">
+        </div></td>
+      <td><div align="right"></div></td>
+    </tr>
+  </table>
+
+</form>
+</body>
+</html>

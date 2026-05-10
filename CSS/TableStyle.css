@@ -1,0 +1,99 @@
+ * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .table-container {
+            overflow-x: auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 800px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px 8px;
+            text-align: right;
+        }
+        th {
+            background-color: #68CACA;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .filter-header {
+            position: sticky;
+            top: 48px;
+            background-color: #f2f2f2;
+            z-index: 9;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        #clearFilters {
+           
+            color: black;
+        }
+        #clearFilters:hover {
+            background-color: #68CACA;
+        }
+        .mobile-message {
+            display: none;
+            background-color: #ffeb3b;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-message {
+                display: block;
+            }
+            body {
+                padding: 10px;
+            }
+            th, td {
+                padding: 8px 5px;
+                font-size: 14px;
+            }
+            input[type="text"] {
+                padding: 6px;
+                font-size: 13px;
+            }
+        }

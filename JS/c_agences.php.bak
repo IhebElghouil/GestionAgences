@@ -1,0 +1,47 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+.Style32 {font-size: 24px; font-weight: bold; }
+-->
+</style>
+</head>
+
+<body>
+<?php
+session_start();
+require('connection.php');
+?>
+<center>
+<br>
+<br>
+<br>
+<center><h2>التصرف في أعوان</h2></center>
+<?php
+$req="select depar from dep where id='".$_SESSION['departement']."'";
+$res=mysql_query($req);
+if($r=mysql_fetch_row($res)) {
+echo '<center><h2>'.$r[0].'</h2></center><br/>';
+}
+?>
+<table width="920" border="3" cellspacing="0" bordercolor="#666666" bgcolor="#FFFFFF">
+  <tr>
+    
+	<td width="130"><div align="center"><a href="c_AccTravail.php"><img src="images/accident.png" width="48" height="48" border="0" /></a></div></td>
+	<td width="130"><div align="center"><a href="c_maladie.php"><img src="images/maladie.png" width="48" height="48" border="0" /></a></div></td>
+	<td width="130"><div align="center"><a href="c_congeannuelle.php"><img src="images/congeannuelle.png" width="48" height="48" border="0" /></a></div></td>
+	<td width="130"><div align="center"><a href="c_congeexceptionnel.php"><img src="images/conge-evenement-familial.jpg" width="48" height="48" border="0" /></a></div></td>
+	<td width="130"><div align="center"><a href="c_rc.php"><img src="images/rc.jpg" width="48" height="48" border="0" /></a></div></td>
+  </tr>
+  <tr>
+    <td><div align="center"><span class="Style32"><a href="c_AccTravail.php" style="text-decoration:none; color:#000000">متابعة حوادث الشغل</a></span></div></td>
+	<td><div align="center"><span class="Style32"><a href="c_maladie.php" style="text-decoration:none; color:#000000">متابعة الرخص المرضيّة</a></span></div></td>
+	<td><div align="center"><span class="Style32"><a href="c_congeannuelle.php" style="text-decoration:none; color:#000000">متابعة الراحات السنويّة</a></span></div></td>
+  <td><div align="center"><span class="Style32"><a href="c_congeexceptionnel.php" style="text-decoration:none; color:#000000">متابعة الرخص الإستثنائيّة</a></span></div></td>
+  <td><div align="center"><span class="Style32"><a href="rc.php" style="text-decoration:none; color:#000000">متابعة الراحات التعويضية</a></span></div></td>
+  </tr>
+</table>
+</center>
+</body>
+</html>

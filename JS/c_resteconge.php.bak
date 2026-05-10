@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<?php
+session_start();
+require('connection.php');
+?>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myInputDateFin {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+
+#myInputDatedebut{
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+
+#myInputaffect {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myInputannee {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myTable {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+#myTable th, #myTable td {
+  text-align: left;
+  padding: 12px;
+}
+
+#myTable tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  background-color: #f1f1f1;
+}
+</style>
+</head>
+<body>
+<table width="920" border="3" cellspacing="0" bordercolor="#666666" bgcolor="#FFFFFF" align="center">
+  <tr>
+    
+	<td width="130"><div align="center"><a href="c_AccTravail.php"><img src="images/accident.png" width="48" height="48" border="0" /></a></div></td>
+	<td width="130"><div align="center"><a href="c_maladie.php"><img src="images/maladie.png" width="48" height="48" border="0" /></a></div></td>
+	<td width="130"><div align="center"><a href="c_congeannuelle.php"><img src="images/congeannuelle.png" width="48" height="48" border="0" /></a></div></td>
+	<td width="130"><div align="center"><a href="c_congeexceptionnel.php"><img src="images/conge-evenement-familial.jpg" width="48" height="48" border="0" /></a></div></td>
+	<td width="130"><div align="center"><a href="c_rc.php"><img src="images/rc.jpg" width="48" height="48" border="0" /></a></div></td>
+	<td width="130"><div align="center"><a href="c_resteconge.php"><img src="images/resteconge.jpeg" width="48" height="48" border="0" /></a></div></td>
+  </tr>
+  <tr>
+    <td><div align="center"><span class="Style32"><a href="c_AccTravail.php" style="text-decoration:none; color:#000000">متابعة حوادث الشغل</a></span></div></td>
+	<td><div align="center"><span class="Style32"><a href="c_maladie.php" style="text-decoration:none; color:#000000">متابعة الرخص المرضيّة</a></span></div></td>
+	<td><div align="center"><span class="Style32"><a href="c_congeannuelle.php" style="text-decoration:none; color:#000000">متابعة الراحات السنويّة</a></span></div></td>
+  <td><div align="center"><span class="Style32"><a href="c_congeexceptionnel.php" style="text-decoration:none; color:#000000">متابعة الرخص الإستثنائيّة</a></span></div></td>
+  <td><div align="center"><span class="Style32"><a href="c_rc.php" style="text-decoration:none; color:#000000">متابعة الراحات التعويضية</a></span></div></td>
+  <td><div align="center"><span class="Style32"><a href="c_resteconge.php" style="text-decoration:none; color:#000000">متابعة رصيد الراحات المتبقيّة</a></span></div></td>
+  </tr>
+</table>
+<center><h2>متابعة رصيد الراحات المتبقيّة</h2></center>
+<?php
+$req="select depar from dep where id='".$_SESSION['departement']."'";
+$res=mysql_query($req);
+if($r=mysql_fetch_row($res)) {
+echo '<center><h2>'.$r[0].'</h2></center><br/>';
+}
+?>
+<table>
+<tr colspan="3">
+<td><input type="text" id="myInputDatedebut" onkeyup="myFunctionDateDebut()" placeholder="البحث بالتاريخ من ..." title="Type in a name" dir="rtl"></td>
+<td><input type="text" id="myInputDateFin" onkeyup="myFunctionDateFin()" placeholder="البحث بالتاريخ إلى ...." title="Type in a name" dir="rtl"></td>
+<tr>
+<td><input type="text" id="myInput" onkeyup="myFunction()" placeholder="البحث بالرقم الآلي ..." title="Type in a name" dir="rtl"></td>
+<td><input type="text" id="myInputaffect" onkeyup="myFunctionaffectation()" placeholder="البحث بوحدة الإرتباط ..." title="Type in a name" dir="rtl"></td>
+<td><input type="text" id="myInputannee" onkeyup="myFunctionannee()" placeholder="البحث بالإسم أو اللقب ..." title="Type in a name" dir="rtl"></td>
+</tr></table>
+
+
+<table id="myTable" dir="rtl">
+  <tr class="header">
+    <th style="width:10%;">الرقم الآلي</th>
+    <th style="width:30%;">الإسم و اللقب</th>
+	<th style="width:20%;">رصيد الإجازات السنويّة المتبقية</th>
+	<th style="width:20%;">وحدة الإرتباط</th>
+	  </tr>
+  
+  <?php 
+    $departement=$_SESSION['departement'];
+
+  $re=mysql_query("select distinct stuf.mecano,nom,nbconge.rest,dep.depar from stuf left join dep on stuf.dep=dep.id left join nbconge on nbconge.mecano=stuf.mecano where contrastage=0  AND stuf.dep=".$departement." order by nbconge.rest desc");
+		while ($r=mysql_fetch_row($re)) {
+		 echo'
+		 <tr>
+    <td>'.$r[0].'</td>
+    <td>'.$r[1].'</td>
+	 <td>'.$r[2].'</td>
+    <td>'.$r[3].'</td>
+	  </tr>
+		';
+		} 
+		?>
+  
+</table>
+
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+
+function myFunctionDateDebut() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInputDatedebut");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[2];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+
+function myFunctionDateFin() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInputDateFin");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[3];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+
+function myFunctionaffectation() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInputaffect");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[4];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+
+function myFunctionannee() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInputannee");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+
+</body>
+</html>

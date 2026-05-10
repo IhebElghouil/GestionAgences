@@ -1,0 +1,96 @@
+<?php
+// Connexion à la base de données avec mysqli
+$conn = new mysqli("127.0.0.1", "root", "", "pointage");
+
+// Vérification de la connexion
+if ($conn->connect_error) {
+    die("La connexion a échoué : " . $conn->connect_error);
+}
+
+// Sécurisation des données d'entrée
+$mecano = $conn->real_escape_string($_POST['myInput']);
+
+// Requête pour obtenir les informations de congé
+$sqlConge = "SELECT conge.id, datedebut, datefin, nbjours, nom 
+             FROM conge 
+             LEFT JOIN stuf ON conge.mecano = stuf.mecano 
+             WHERE conge.mecano = ? 
+             ORDER BY conge.mecano, datefin DESC";
+$stmtConge = $conn->prepare($sqlConge);
+$stmtConge->bind_param("s", $mecano);
+$stmtConge->execute();
+$resultConge = $stmtConge->get_result();
+
+// Requête pour obtenir les informations du salarié
+$sqlFind = "SELECT stuf.mecano, stuf.nom, stuf.daten, stuf.daterec, titres.libellet, nbconge.nbj1, nbconge.nbj2, nbconge.rest, ((nbj1 + nbj2) - rest), stuf.jrepos 
+            FROM stuf 
+            LEFT JOIN titres ON stuf.titre = titres.id 
+            LEFT JOIN nbconge ON nbconge.mecano = stuf.mecano 
+            WHERE stuf.mecano = ?";
+$stmtFind = $conn->prepare($sqlFind);
+$stmtFind->bind_param("s", $mecano);
+$stmtFind->execute();
+$resultFind = $stmtFind->get_result();
+
+// Requête pour obtenir les autres congés
+$sqlAutreConge = "SELECT autreconge.id, datedebut, datefin, commentaire, type, type2 
+                  FROM autreconge 
+                  LEFT JOIN stuf ON autreconge.mecano = stuf.mecano 
+                  WHERE autreconge.mecano = ? 
+                  ORDER BY datefin DESC";
+$stmtAutreConge = $conn->prepare($sqlAutreConge);
+$stmtAutreConge->bind_param("s", $mecano);
+$stmtAutreConge->execute();
+$resultAutreConge = $stmtAutreConge->get_result();
+
+// Requête pour obtenir les carrières
+$sqlCarriere = "SELECT * FROM carriere WHERE mecano = ? ORDER BY dateeffet DESC";
+$stmtCarriere = $conn->prepare($sqlCarriere);
+$stmtCarriere->bind_param("s", $mecano);
+$stmtCarriere->execute();
+$resultCarriere = $stmtCarriere->get_result();
+
+// Dates de contrôle
+$PremierJourCtrl = date('Y-01-01', strtotime('next year'));
+$DernierJourCtrl = date('Y-12-31', strtotime('last year'));
+
+// Requête pour obtenir le nombre de jours de maladie
+$sqlMaladie = "SELECT SUM(DATEDIFF(LEAST(?, datefin), GREATEST(?, datedebut))) AS TotalJoursMaladie 
+               FROM autreconge 
+               WHERE datedebut <= ? AND datefin >= ? AND TYPE = 5 AND mecano = ?";
+$stmtMaladie = $conn->prepare($sqlMaladie);
+$stmtMaladie->bind_param("sssss", $PremierJourCtrl, $DernierJourCtrl, $DateFinRequete, $DateDebutRequete, $mecano);
+$stmtMaladie->execute();
+$resultMaladie = $stmtMaladie->get_result();
+
+// Récupérer le nombre total de jours de maladie
+$NbJourMaladie = 0;
+while ($rMaladie = $resultMaladie->fetch_row()) {
+    $NbJourMaladie = $rMaladie[0];
+}
+
+// Affichage des résultats
+$num_rows = $resultConge->num_rows;
+if ($num_rows > 0) {
+    while ($rNom = $resultFind->fetch_row()) {
+        $mecano = $rNom[0];
+        $nom = $rNom[1];
+        $datenaissance = $rNom[2];
+        $daterecrutement = $rNom[3];
+        $grade = $rNom[4];
+        $nbj1 = $rNom[5];
+        $nbj2 = $rNom[6];
+        $rest = $rNom[7];
+        $jconsomme = $rNom[8];
+        $jrepos = $rNom[9];
+    }
+}
+
+// Fermer les déclarations et la connexion
+$stmtConge->close();
+$stmtFind->close();
+$stmtAutreConge->close();
+$stmtCarriere->close();
+$stmtMaladie->close();
+$conn->close();
+?>

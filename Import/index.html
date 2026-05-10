@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Import Excel</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h2>Import Excel File</h2>
+  <form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="excel_file" id="excel_file" accept=".xls,.xlsx" required>
+    <button type="submit">Upload</button>
+  </form>
+  <div id="result"></div>
+
+  <script>
+    $('#uploadForm').on('submit', function(e) {
+      e.preventDefault();
+      var formData = new FormData(this);
+      $.ajax({
+        url: 'import_excel.php',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+          $('#result').html(response);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
